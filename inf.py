@@ -32,17 +32,19 @@ for files in os.listdir(directory):
     #name.remove('questions.txt')
     name = ' '.join(name)
     
-
+    x = 0
     with open (directory+files,'r',encoding='utf-8') as questions:
         list_of_questions = questions.readlines()
         
-        for vals in list_of_questions:
-            
-            
-            if vals.split() in ['â—¦\n','\n','â€¢\n','*','\ufeff\n',''] :
-               list_of_questions.remove(vals.split())
-            
+        for vals in list_of_questions:            
             list_of_questions[list_of_questions.index(vals)] = list_of_questions[list_of_questions.index(vals)].split()
+            
+        for values in list_of_questions[x]:        
+                
+                if list_of_questions[x] in ['â—¦\n','\n','â€¢\n','*','\ufeff\n','']:
+                    list_of_questions.remove(values)
+            x+= 1
+            list_of_questions[x] = ' '.join(list_of_questions[x]) 
         print(list_of_questions)
         questions.close()
    
@@ -93,7 +95,9 @@ for files in os.listdir(directory):
     sleep(5)
   #Iterates through all the question texts and inputs them then saves the blooket then clicks create set
     
-    for vals in range(int((len(list_of_questions)/5))):
+    for vals in range(int((len(list_of_questions)))):
+       if list_of_questions[vals] in ['True','False']:
+           pass
        try: 
             question_input.interact_with(0.1,xpath_dictionary['quesiton input xpath'],driver,list_of_questions,question_index)
             question_input.interact_with(0.1,xpath_dictionary['answer 1 input xpath'],driver,list_of_questions,question_index+1)
